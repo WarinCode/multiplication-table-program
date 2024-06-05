@@ -47,16 +47,18 @@ public final class MultiplicationTable implements WindowListener, MouseListener,
         this.topPanel.add(this.btn);
         this.content.add(topPanel, BorderLayout.NORTH);
 
-        // ให้ textField มี cursor กระพิบที่ช้องป้อนข้อความ
+        // ให้ textField มี cursor กระพิบที่ช้องป้อนข้อความตอนเริ่มโปรแกรม
         this.field.grabFocus();
     }
 
     private void generateNumbers(int n){
-        // ลบ components ทั้งหมดที่อยู่ใน main panel ออกก่อนแล้วค่อยวาง components ใหม่เข้าไป
-        this.mainPanel.removeAll();
+        // ลบ components เก่าทั้งหมดที่อยู่ใน main panel ออกก่อนแล้วค่อยวาง components ใหม่เข้าไป
+        if(this.mainPanel.countComponents() != 0){
+            this.mainPanel.removeAll();
+        }
         this.mainPanel.setVisible(false);
         this.field.setText("");
-        // ใส่ข้อความ , จัดตำแหน่ง , เปลี่ยนสี และ เพิ่ม component เข้าไปใน panel2
+        // ใส่ข้อความ , จัดตำแหน่ง , เปลี่ยนสี และ เพิ่ม component เข้าไปใน main panel
         this.title.setText("The Multiplication Table of: " + n);
         this.title.setForeground(Color.BLUE);
         this.title.setHorizontalAlignment(this.CENTER);
@@ -88,6 +90,8 @@ public final class MultiplicationTable implements WindowListener, MouseListener,
         } catch(NumberFormatException exception){
             // ใช้ class NumberFormatException เมื่อเกิดข้อผิดพลาดที่แปลงจากข้อความไปเป็นเลขจำนวนเต็มไม่สำเร็จให้แสดง dialog ที่มีข้อความ error ขึ้นมา
             this.showErrorMessage("Error: " + exception.getMessage());
+        } finally {
+            this.field.grabFocus();
         }
     }
     public void mouseEntered(MouseEvent e) {}
